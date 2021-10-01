@@ -1,5 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/angular
-# Edit at https://www.toptal.com/developers/gitignore?templates=angular
+
+# Created by https://www.toptal.com/developers/gitignore/api/angular,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=angular,visualstudiocode
 
 ### Angular ###
 ## Angular ##
@@ -32,4 +33,20 @@ e2e/*.map
 # System Files
 .DS_Store/
 
-# End of https://www.toptal.com/developers/gitignore/api/angular
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/angular,visualstudiocode
