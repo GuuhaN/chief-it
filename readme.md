@@ -18,3 +18,9 @@ How to use:
 - Reload the page to pull all data from the backend.
 - Each page reload simulates the next day.
 - Making order based on the day. If there is no item for something, you get an 206 or 404 based on one or two products not available.
+
+IMPROVEMENTS:  
+- Seperate controllers for each domain
+- Folder structure of every componenet in Angular
+- Shared module loader
+- Bug fixes
