@@ -21,6 +21,9 @@ export class AppComponent {
   currentHerd: Yak[];
   currentMilk: number;
   currentSkins: number;
+
+  newOrderMilk: string;
+  newOrderSkins: string;
   constructor(private yakshopservice: YakshopService, private _formBuilder: FormBuilder) { }
   customerOrderForm: FormGroup;
 
@@ -51,13 +54,13 @@ export class AppComponent {
     ageLastShaved: 0}, {
       id: 0,
       name: "Yak-2",
-      age: 4,
+      age: 8,
       sex: "MALE",
       ageLastShaved: 0},
       {
         id: 0,
         name: "Yak-3",
-        age: 4,
+        age: 9.5,
         sex: "FEMALE",
         ageLastShaved: 0}
     ];
@@ -68,7 +71,6 @@ export class AppComponent {
       };
 
     this.yakshopservice.getHerd(herd).subscribe((data: Herd) => {
-      console.log(data);
       localStorage.setItem("currentDay", "0");
     })
   }
@@ -85,8 +87,17 @@ export class AppComponent {
       order: customerOrder  
     };
     this.yakshopservice.postOrder(this.day, order).subscribe((data: CustomerOrder) => {
-      console.log(data);
+      if(data.order.milk === undefined)
+        this.newOrderMilk = "OUT OF STOCK";
+      else 
+        this.newOrderMilk = data.order.milk.toString();
+      if(data.order.skins === undefined)
+        this.newOrderSkins = "OUT OF STOCK";
+      else
+        this.newOrderSkins = data.order.skins.toString();
     }, error => {
+      this.newOrderMilk = "OUT OF STOCK";
+      this.newOrderSkins = "OUT OF STOCK";
       console.log("error here", error.error);
     });
   }

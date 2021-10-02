@@ -1,52 +1,68 @@
 <mat-toolbar color="primary">
   <span>Yak Shop - Day {{this.day}}</span>
+  <span class="toolbar-spacer"></span>
+  <span>Current Stock</span>
+  <span class="stock-spacer">Milk: {{this.currentMilk}} </span>
+  <span>Skins: {{this.currentSkins}} </span>
 </mat-toolbar>
 
 <body>
   <mat-grid-list cols="2" rowHeight="40vh">
     <mat-grid-tile>
-      <h1>Current Herd</h1>
-      <ul>
-        <li *ngFor="let yak of currentHerd">
-          <h2>{{yak.name}}</h2>
-          <p>{{yak.age}}</p>
-          <p>{{yak.sex}}</p>
-        </li>
-      </ul>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <h1>Current Stock</h1>
-      <P>Milk: {{this.currentMilk}}</P>
-      <P>Skins: {{this.currentSkins}}</P>
+      <table>
+        <thead>
+          <tr>
+            <th>Yak name</th>
+            <th>Yak age</th>
+            <th>Yak sex</th>
+            <th>Yak last shaved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let yak of currentHerd">
+            <td>{{yak.name}}</td>
+            <td>{{yak.age}}</td>
+            <td>{{yak.sex}}</td>
+            <td>{{yak.ageLastShaved}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button mat-raised-button (click)="getHerd()">Load in new herd</button>
     </mat-grid-tile>
     <mat-grid-tile>      
       <h1>Order product</h1>
       <form [formGroup]="customerOrderForm">
         <mat-vertical-stepper [linear]="true" #stepper>
           <mat-step label="Customer Info" [formControl]="customerOrderForm">
-            <input matInput type="text" required>
+            <input matInput type="text" formControlName="customer" required>
             <button mat-stroked-button matStepperNext>Next</button>
           </mat-step>
           <mat-step label="Order">
-            <label>Milk: </label><input type="number">
+            <label>Milk: </label><input formControlName="milk" type="number">
             <br />
-            <label>Skin: </label><input type="number">
+            <label>Skin: </label><input formControlName="skins" type="number">
             <br />
             <button mat-stroked-button matStepperNext (click)="postOrder()">Purchase</button>
           </mat-step>
           <mat-step label="Order Complete">
             <h1>Thank you for ordering!</h1>
+            <h2>Your order</h2>
+            <p>Milk: {{this.newOrderMilk}}</p>
+            <p>Skins: {{this.newOrderSkins}}</p>
           </mat-step>
         </mat-vertical-stepper>
       </form></mat-grid-tile>
   </mat-grid-list>
-
-  <h1>DEBUG BUTTONS</h1>
-  <div>
-    <button (click)="postOrder()">CREATE ORDER</button>
-    <button (click)="getHerd()">NEW HERD</button>
-    <button (click)="getStock()">STOCK UPDATE</button>
-    <button (click)="getHerdDays()">GET HERD DATA</button>
-  </div>
-  <h2>SWAGGER FOR ALL ENDPOINTS: https://localhost:44317/swagger/index.html</h2>
 </body>
+
+<h1>DEBUG BUTTONS</h1>
+<h2>Instruction</h2>
+<p>To simulate days, a reload moves one day ahead. So everything gets updated. To check stock, herd age and even if order stock check.</p>
+<p>Yeah, design isn't that great.</p>
+<div>
+  <button (click)="postOrder()">CREATE ORDER</button>
+  <button (click)="getHerd()">NEW HERD</button>
+  <button (click)="getStock()">STOCK UPDATE</button>
+  <button (click)="getHerdDays()">GET HERD DATA</button>
+</div>
+<h2>SWAGGER FOR ALL ENDPOINTS: https://localhost:44317/swagger/index.html</h2>

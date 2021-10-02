@@ -27,13 +27,18 @@ namespace yak_shop_api.Controllers
         [HttpGet("TESTING")]
         public ActionResult<IEnumerable<Herd>> GetHerds()
         {
-            return _context.Herds.Include(x=> x.Yaks).ToList();
+            return _context.Herds.Include(x => x.Yaks).ToList();
         }
 
         [HttpGet("stock/{day}")]
         public ActionResult<Stock> GetStock(int day)
         {
             Stock stockNow = GiveStock(day);
+            if (_context.Herds == null)
+                return NotFound("Please load in your herd before requesting the stock");
+
+            if (_context.Herds.FirstOrDefault().Yaks.Count <= 0)
+                return NotFound("Please add yaks to your herd, no yaks found.");
             _context.Stocks.RemoveRange(_context.Stocks);
             _context.Stocks.Add(stockNow);
             _context.SaveChanges();
@@ -54,11 +59,18 @@ namespace yak_shop_api.Controllers
                 for (int i = 0; i < day; i++)
                 {
                     double newAge = yak.Age + (double)i / 100;
-                    if (CanShave(newAge, (double)yak.AgeLastShaved))
-                        yak.AgeLastShaved = newAge;
+                    if (newAge < 10)
+                    {
+                        if (CanShave(newAge, (double)yak.AgeLastShaved))
+                            yak.AgeLastShaved = newAge;
+                    }
+                    if (yak.Age + (double)day / 100 < 10)
+                        yak.Age = yak.Age + (double)day / 100;
+                    else
+                        yak.Age = 10;
                 }
-                yak.Age = yak.Age + (double)day / 100;
             }
+            herd.First().Yaks = yaks;
             return herd;
         }
 
@@ -72,12 +84,14 @@ namespace yak_shop_api.Controllers
             for (int i = 0; i < herd.Yaks.Count; i++)
             {
                 if (herd.Yaks[i].Age >= 10)
-                    herd.Yaks.RemoveAt(i);
-                herd.Yaks[i].AgeLastShaved = null;
+                    herd.Yaks.Remove(herd.Yaks[i]);
+                else
+                    herd.Yaks[i].AgeLastShaved = null;
+
             }
             _context.Herds.Add(herd);
             await _context.SaveChangesAsync();
-            return herd;
+            return StatusCode(205, herd);
         }
 
         [HttpPost("order/{day}")]
@@ -105,14 +119,14 @@ namespace yak_shop_api.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            if (order.Order.Milk == null && order.Order.Milk == null)
+            if (order.Order.Milk == null && order.Order.Skins == null)
             {
                 return NotFound("No stock of your order");
             }
 
-            if (order.Order.Milk == null || order.Order.Milk == null)
+            if (order.Order.Milk == null || order.Order.Skins == null)
             {
-                return NotFound(order); // Moet een 206 Partial Content returnen.
+                return StatusCode(206, order);
             }
 
             return order;
@@ -120,7 +134,7 @@ namespace yak_shop_api.Controllers
 
         private bool CanShave(double currentAge, double lastAgeShaved)
         {
-            if(currentAge >= 1)
+            if (currentAge >= 1)
                 return currentAge >= lastAgeShaved + ((8 + currentAge) / 100);
 
             return false;
@@ -146,11 +160,14 @@ namespace yak_shop_api.Controllers
                     for (int i = 0; i < day; i++)
                     {
                         double newAge = yak.Age + (double)i / 100;
-                        totalMilk += 50 - ((newAge * 100) * 0.03);
-                        if (CanShave(newAge, (double)yak.AgeLastShaved))
+                        if(newAge < 10)
                         {
-                            yak.AgeLastShaved = newAge;
-                            totalSkins++;
+                            totalMilk += 50 - ((newAge * 100) * 0.03);
+                            if (CanShave(newAge, (double)yak.AgeLastShaved))
+                            {
+                                yak.AgeLastShaved = newAge;
+                                totalSkins++;
+                            }
                         }
                     }
                 }

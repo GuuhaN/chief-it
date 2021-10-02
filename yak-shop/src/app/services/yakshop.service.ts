@@ -17,6 +17,7 @@ export class YakshopService {
   }
 
   getHerd(herd: Herd): Observable<Herd> {
+    console.log(herd);
     return this.httpClient.post("https://localhost:44317/yak-shop/load", herd).pipe(map((response: Herd) => response));
   }
 
