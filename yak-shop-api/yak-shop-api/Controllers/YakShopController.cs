@@ -34,11 +34,12 @@ namespace yak_shop_api.Controllers
         public ActionResult<Stock> GetStock(int day)
         {
             Stock stockNow = GiveStock(day);
-            if (_context.Herds == null)
+            if (_context.Herds.FirstOrDefault() == null)
                 return NotFound("Please load in your herd before requesting the stock");
 
             if (_context.Herds.FirstOrDefault().Yaks.Count <= 0)
                 return NotFound("Please add yaks to your herd, no yaks found.");
+
             _context.Stocks.RemoveRange(_context.Stocks);
             _context.Stocks.Add(stockNow);
             _context.SaveChanges();
