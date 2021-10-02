@@ -21,7 +21,8 @@
         <tbody>
           <tr *ngFor="let yak of currentHerd">
             <td>{{yak.name}}</td>
-            <td>{{yak.age}}</td>
+            <td *ngIf="yak.age < 10">{{yak.age}}</td>
+            <td *ngIf="yak.age >= 10">DEAD</td>
             <td>{{yak.sex}}</td>
             <td>{{yak.ageLastShaved}}</td>
           </tr>

@@ -65,11 +65,11 @@ namespace yak_shop_api.Controllers
                         if (CanShave(newAge, (double)yak.AgeLastShaved))
                             yak.AgeLastShaved = newAge;
                     }
-                    if (yak.Age + (double)day / 100 < 10)
-                        yak.Age = yak.Age + (double)day / 100;
-                    else
-                        yak.Age = 10;
                 }
+                if (yak.Age + (double)day / 100 < 10)
+                    yak.Age = yak.Age + (double)day / 100;
+                else
+                    yak.Age = 10;
             }
             herd.First().Yaks = yaks;
             return herd;
