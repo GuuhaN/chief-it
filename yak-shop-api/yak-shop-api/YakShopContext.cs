@@ -7,9 +7,9 @@ using yak_shop_api.Models;
 
 namespace yak_shop_api
 {
-    public class HerdContext : DbContext
+    public class YakShopContext : DbContext
     {
-        public HerdContext(DbContextOptions<HerdContext> options ): base(options) { }
+        public YakShopContext(DbContextOptions<YakShopContext> options ): base(options) { }
 
         public DbSet<Herd> Herds { get; set; }
         public DbSet<Yak> Yaks { get; set; }

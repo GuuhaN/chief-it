@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "yak-shop"
+  "defaultProject": "yak-shop",
+  "cli": {
+    "analytics": false
+  }
 }

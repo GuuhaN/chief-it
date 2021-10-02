@@ -15,7 +15,8 @@ namespace yak_shop_api.Models
         public string Name { get; set; }
         public double Age { get; set; }
         public string Sex { get; set; }
-        public double AgeLastShaved { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public double? AgeLastShaved { get; set; }
 
         public Yak()
         {

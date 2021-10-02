@@ -1,15 +1,52 @@
 <mat-toolbar color="primary">
-  <span>Yak Shop</span>
+  <span>Yak Shop - Day {{this.day}}</span>
 </mat-toolbar>
 
-<div>
-  <h1>Herd</h1>
-  <p>Yak Name</p>
-  <p>Age:</p>
-  <p>Last shaved:</p>
-  <h1>Stock:</h1>
-  <p>Milk: </p>
-  <p>Skin: </p>
-  <h1>Orders</h1>
-  <p>Order 1</p>
-</div>
+<body>
+  <mat-grid-list cols="2" rowHeight="40vh">
+    <mat-grid-tile>
+      <h1>Current Herd</h1>
+      <ul>
+        <li *ngFor="let yak of currentHerd">
+          <h2>{{yak.name}}</h2>
+          <p>{{yak.age}}</p>
+          <p>{{yak.sex}}</p>
+        </li>
+      </ul>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <h1>Current Stock</h1>
+      <P>Milk: {{this.currentMilk}}</P>
+      <P>Skins: {{this.currentSkins}}</P>
+    </mat-grid-tile>
+    <mat-grid-tile>      
+      <h1>Order product</h1>
+      <form [formGroup]="customerOrderForm">
+        <mat-vertical-stepper [linear]="true" #stepper>
+          <mat-step label="Customer Info" [formControl]="customerOrderForm">
+            <input matInput type="text" required>
+            <button mat-stroked-button matStepperNext>Next</button>
+          </mat-step>
+          <mat-step label="Order">
+            <label>Milk: </label><input type="number">
+            <br />
+            <label>Skin: </label><input type="number">
+            <br />
+            <button mat-stroked-button matStepperNext (click)="postOrder()">Purchase</button>
+          </mat-step>
+          <mat-step label="Order Complete">
+            <h1>Thank you for ordering!</h1>
+          </mat-step>
+        </mat-vertical-stepper>
+      </form></mat-grid-tile>
+  </mat-grid-list>
+
+  <h1>DEBUG BUTTONS</h1>
+  <div>
+    <button (click)="postOrder()">CREATE ORDER</button>
+    <button (click)="getHerd()">NEW HERD</button>
+    <button (click)="getStock()">STOCK UPDATE</button>
+    <button (click)="getHerdDays()">GET HERD DATA</button>
+  </div>
+  <h2>SWAGGER FOR ALL ENDPOINTS: https://localhost:44317/swagger/index.html</h2>
+</body>

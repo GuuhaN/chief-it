@@ -29,7 +29,17 @@ namespace yak_shop_api
         {
 
             services.AddControllers();
-            services.AddDbContext<HerdContext>(opt => opt.UseInMemoryDatabase("Herds"));
+            services.AddDbContext<YakShopContext>(opt => opt.UseInMemoryDatabase("Herds"));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Cors",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "yak_shop_api", Version = "v1" });
@@ -49,6 +59,8 @@ namespace yak_shop_api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("Cors");
 
             app.UseAuthorization();
 
