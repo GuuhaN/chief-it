@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yak-shop-api", "yak-shop-api\yak-shop-api.csproj", "{5DC8D4D0-1775-477A-B285-245C4E5DDD88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yak-shop-api", "yak-shop-api\yak-shop-api.csproj", "{5DC8D4D0-1775-477A-B285-245C4E5DDD88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yakshoptests", "yakshoptests\yakshoptests.csproj", "{7B9EBB77-3AF2-4B73-A03C-6D51678F1315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5DC8D4D0-1775-477A-B285-245C4E5DDD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DC8D4D0-1775-477A-B285-245C4E5DDD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DC8D4D0-1775-477A-B285-245C4E5DDD88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9EBB77-3AF2-4B73-A03C-6D51678F1315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9EBB77-3AF2-4B73-A03C-6D51678F1315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9EBB77-3AF2-4B73-A03C-6D51678F1315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9EBB77-3AF2-4B73-A03C-6D51678F1315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

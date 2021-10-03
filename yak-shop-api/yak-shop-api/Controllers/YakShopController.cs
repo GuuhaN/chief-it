@@ -18,6 +18,11 @@ namespace yak_shop_api.Controllers
     {
         private readonly YakShopContext _context;
 
+        public YakShopController()
+        {
+
+        }
+
         public YakShopController(YakShopContext context)
         {
             _context = context;
