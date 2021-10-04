@@ -105,6 +105,7 @@ namespace yak_shop_api.Controllers
         [ProducesResponseType(StatusCodes.Status206PartialContent, Type = typeof(CustomerOrder))]
         public async Task<ActionResult<CustomerOrder>> PostOrder(int day, CustomerOrder customerOrder)
         {
+            
             Stock inStock = GiveStock(day);
             double? preOrderMilk = customerOrder.Order.Milk;
             int? preOrderSkins = customerOrder.Order.Skins;
